@@ -19,11 +19,11 @@ const getNewsSpecified = (req, res) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error('Error executing query:', err);
-            res.status(500).send('Error retrieving data');
+            res.status(500).json({ message: "Error retrieving data" });
             return;
         }   
         if (results.length === 0) {
-            res.status(404).send('No data found with the specified ID');
+            res.status(404).json({ message: "No data found with the specified ID"});
             return;
         }   
         const data = results[0]; // Process query results
