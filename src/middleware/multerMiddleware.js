@@ -5,10 +5,10 @@ const storage = multer.memoryStorage(); // Use memory storage for simplicity
 
 // Set up Multer configuration
 const multerConfig = {
-    storage: storage,
-    limits: {
-        fileSize: 5 * 1024 * 1024, // Limit file size to 5MB
-    },
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // Limit file size to 5MB
+  },
 };
 
 // Create Multer middleware
