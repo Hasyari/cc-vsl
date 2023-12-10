@@ -1,20 +1,10 @@
 const express = require('express');
 const newsController = require('../controller/newsController')
+const uploadMiddleware = require("../middleware/multerMiddleware")
 
 const router = express.Router();
-const multer  = require('multer');
 
-
-const upload = multer({ 
-    storage: multer.memoryStorage(),
-    limits: {
-      // no larger than 5mb.
-      fileSize: 5 * 1024 * 1024,
-    },
-    
-});
-
-router.post('/', upload.single('image'), newsController.postNewsData);
+router.post('/', uploadMiddleware, newsController.postNewsData);
 
 router.get('/', newsController.getNewsAll);
 router.get('/:id', newsController.getNewsSpecified);
