@@ -27,7 +27,7 @@ Request Body :
 ]
 ```
 
-## GET Spefieced Data News
+## GET Specified Data News
 
 Endpoint : GET /news/1
 
@@ -46,7 +46,7 @@ Request Body :
 }
 ```
 
-## POST Spefieced Data News
+## POST Data News
 
 Endpoint : POST /news/
 
