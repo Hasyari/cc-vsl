@@ -46,16 +46,17 @@ const postNewsData = async (req, res) => {
          // Upload image to GCS
         const uploadedImage = await uploadImageToGCS(file);
 
-        const savedNews = await news.create({
+        const createdNews = await news.create({
             judul: req.body.judul,
             deskripsi: req.body.deskripsi,
             image_url: uploadedImage.publicUrl,
         })
 
-         // Return success response
-        res.json({
-            message: 'Image uploaded successfully!',
-        });
+        if (createdNews) {
+            res.status(201).json({ message: 'News created successfully', data: createdNews});
+        } else {
+            res.status(500).json({ error: 'Failed to create news' });
+        }
 
     } catch (error) {
         console.error(error);
@@ -65,34 +66,29 @@ const postNewsData = async (req, res) => {
 
 const getNewsAll = async (req, res) => {
     try {
-        await news.findAll().then((data) => {
-            res.json(data);
-        })
+        const data = await news.findAll();
+        res.json(data);
     } catch (err) {
         console.error('Error executing query:', err);
         res.status(500).send('Error retrieving data');
-        return;
     }
 };
 
 const getNewsSpecified = async (req, res) => {
     const id = req.params.id;
-    const user = await news.findOne({
-        where: { id: id, },
-    });
-    
-    if(user) {
-        return res.status(200).json({
-            data: user,
+    try {
+        const newsItem = await news.findOne({
+            where: { id: id },
         });
-    } else if (!user) {
-        return res.status(404).json({
-            message: 'News not found',
-        });
-    } else {
+
+        if (newsItem) {
+            return res.status(200).json({ data: newsItem });
+        } else {
+            return res.status(404).json({ message: 'News not found' });
+        }
+    } catch (err) {
         console.error('Error executing query:', err);
-        res.status(500).json({ message: "Error retrieving data" });
-        return;
+        res.status(500).json({ message: 'Error retrieving data' });
     }
 };
 
