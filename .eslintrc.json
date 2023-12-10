@@ -9,6 +9,8 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "new-cap":"off",
+        "linebreak-style":"off",
+        "max-len":"off",
+        "new-cap":"off"
     }
 }

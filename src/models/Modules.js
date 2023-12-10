@@ -22,7 +22,7 @@ const Modules = sequelize.define(
       },
     },
     {
-        tableName: 'news',
+      tableName: 'module',
     },
 );
 

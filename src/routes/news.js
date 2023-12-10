@@ -1,6 +1,6 @@
 const express = require('express');
-const newsController = require('../controller/newsController')
-const uploadMiddleware = require("../middleware/multerMiddleware")
+const newsController = require('../controller/newsController');
+const uploadMiddleware = require('../middleware/multerMiddleware');
 
 const router = express.Router();
 

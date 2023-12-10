@@ -8,33 +8,26 @@ const storage = new Storage({
 });
 
 const uploadImageToGCS = async (file) => {
-  try {
-    // Get a reference to the destination bucket and file
-    const bucket = storage.bucket(config.bucket_name);
-    const storageFileName = `${Date.now()}_${file.originalname}`;
-    const blob = bucket.file(storageFileName);
+  const bucket = storage.bucket(config.bucket_name);
+  const storageFileName = `${Date.now()}_${file.originalname}`;
+  const blob = bucket.file(storageFileName);
 
-    // Create a write stream to the destination file in Google Cloud Storage
-    const writeStream = blob.createWriteStream({
-      resumable: false,
-    });
+  const writeStream = blob.createWriteStream({
+    resumable: false,
+  });
 
-    // Pipe the file buffer to the write stream
+  return new Promise((resolve, reject) => {
     writeStream.end(file.buffer);
 
     writeStream
         .on('error', (err) => {
-          console.error('Error uploading image:', err);
+          reject(new Error({success: false, error: err, url: null}));
         })
         .on('finish', () => {
           const publicUrl = `https://storage.googleapis.com/${config.bucket_name}/${storageFileName}`;
-          console.log(`Image uploaded to: ${publicUrl}`);
+          resolve({success: true, error: null, url: publicUrl});
         });
-
-    return {name: file.originalname, publicUrl: `https://storage.googleapis.com/${config.bucket_name}/${storageFileName}`};
-  } catch (err) {
-    console.error('Error processing upload request:', err);
-  }
+  });
 };
 
 const postNewsData = async (req, res) => {
@@ -44,10 +37,17 @@ const postNewsData = async (req, res) => {
     // Upload image to GCS
     const uploadedImage = await uploadImageToGCS(file);
 
+    if (!uploadedImage.success) {
+      console.error('Error uploading image:', uploadedImage.error);
+      return res.status(500).json({error: 'Error uploading image'});
+    }
+
+    console.log('Image uploaded successfully. URL:', uploadedImage.url);
+
     const createdNews = await news.create({
       judul: req.body.judul,
       deskripsi: req.body.deskripsi,
-      image_url: uploadedImage.publicUrl,
+      image_url: uploadedImage.url,
     });
 
     if (createdNews) {
@@ -57,7 +57,7 @@ const postNewsData = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({message: 'Error uploading image'});
+    res.status(500).json({message: 'Internal Server Error'});
   }
 };
 
