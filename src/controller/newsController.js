@@ -1,41 +1,12 @@
-const {Storage} = require('@google-cloud/storage');
-const config = require('../config/config.json');
 const news = require('../models/News');
-const path = require('path');
-const keyFilename = path.join(__dirname, '..', 'config', 'credentials.json');
-const storage = new Storage({
-  keyFilename: keyFilename,
-});
-
-const uploadImageToGCS = async (file) => {
-  const bucket = storage.bucket(config.bucket_name);
-  const storageFileName = `${Date.now()}_${file.originalname}`;
-  const blob = bucket.file(storageFileName);
-
-  const writeStream = blob.createWriteStream({
-    resumable: false,
-  });
-
-  return new Promise((resolve, reject) => {
-    writeStream.end(file.buffer);
-
-    writeStream
-        .on('error', (err) => {
-          reject(new Error({success: false, error: err, url: null}));
-        })
-        .on('finish', () => {
-          const publicUrl = `https://storage.googleapis.com/${config.bucket_name}/${storageFileName}`;
-          resolve({success: true, error: null, url: publicUrl});
-        });
-  });
-};
+const uploadImage = require('../utils/uploadImage');
 
 const postNewsData = async (req, res) => {
   try {
     const file = req.file;
 
     // Upload image to GCS
-    const uploadedImage = await uploadImageToGCS(file);
+    const uploadedImage = await uploadImage(file);
 
     if (!uploadedImage.success) {
       console.error('Error uploading image:', uploadedImage.error);
