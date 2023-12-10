@@ -7,6 +7,9 @@ const app = express();
 const newsRoutes = require('./routes/news');
 const modulesRoutes = require('./routes/modules');
 
+app.use(bodyParser.json());
+// Parse application/json
+app.use(bodyParser.urlencoded({ extended: true }));
 
 require('dotenv').config()
 app.use(cors())
