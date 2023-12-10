@@ -1,9 +1,7 @@
 const multer = require('multer');
 
-// Set up Multer storage
-const storage = multer.memoryStorage(); // Use memory storage for simplicity
+const storage = multer.memoryStorage();
 
-// Set up Multer configuration
 const multerConfig = {
   storage: storage,
   limits: {
@@ -11,7 +9,6 @@ const multerConfig = {
   },
 };
 
-// Create Multer middleware
 const uploadMiddleware = multer(multerConfig).single('image');
 
 module.exports = uploadMiddleware;
