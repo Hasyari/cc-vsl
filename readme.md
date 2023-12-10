@@ -9,7 +9,7 @@ Request Body :
 ```json
 {
     "id": 1,
-    "judul": "Mamang Grox",
+    "judul": "Dummy",
     "deskripsi": "Testing",
     "image_url": "123"
 },
@@ -30,7 +30,7 @@ Request Body :
 ```json
 {
   "id": 1,
-  "judul": "Mamang Garox",
+  "judul": "Dummy",
   "deskripsi": "lorem",
   "image_url": "123"
 }
