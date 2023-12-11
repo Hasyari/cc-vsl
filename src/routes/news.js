@@ -1,10 +1,11 @@
 const express = require('express');
 const newsController = require('../controller/newsController');
-const uploadMiddleware = require('../middleware/multerMiddleware');
+const {uploadFile} = require('../middleware/multerMiddleware');
+
 
 const router = express.Router();
 
-router.post('/', uploadMiddleware, newsController.postNewsData);
+router.post('/', uploadFile, newsController.postNewsData);
 
 router.get('/', newsController.getNewsAll);
 router.get('/:id', newsController.getNewsSpecified);

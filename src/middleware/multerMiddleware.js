@@ -22,6 +22,8 @@ const multerConfig = {
   fileFilter: fileFilter,
 };
 
-const uploadMiddleware = multer(multerConfig).single('image');
+const uploadFile = multer(multerConfig).single('image');
 
-module.exports = uploadMiddleware;
+module.exports = {
+  uploadFile,
+};

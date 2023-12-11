@@ -26,6 +26,4 @@ const Modules = sequelize.define(
     },
 );
 
-sequelize.sync();
-
 module.exports = Modules;

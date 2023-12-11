@@ -7,8 +7,9 @@ const storage = new Storage({
 });
 
 const uploadImage = async (file) => {
+  const fileExtension = file.originalname.split('.').pop();
   const bucket = storage.bucket(config.bucket_name);
-  const storageFileName = `${Date.now()}_${file.originalname}`;
+  const storageFileName = `${Date.now()}.${fileExtension}`;
   const blob = bucket.file(storageFileName);
 
   const writeStream = blob.createWriteStream({

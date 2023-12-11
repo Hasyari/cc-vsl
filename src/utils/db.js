@@ -24,5 +24,7 @@ sequelize
       console.log('error connected : ' + err.message);
     });
 
+sequelize.sync({force: false});
+
 
 module.exports = sequelize;
