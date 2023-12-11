@@ -8,13 +8,13 @@ const Modules = sequelize.define(
         primaryKey: true,
         autoIncrement: true,
       },
-      judul: {
+      huruf: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       deskripsi: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       image_url: {
         type: DataTypes.STRING,

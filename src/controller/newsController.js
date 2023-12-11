@@ -35,7 +35,18 @@ const postNewsData = async (req, res) => {
 const getNewsAll = async (req, res) => {
   try {
     const data = await news.findAll();
-    res.json(data);
+
+    if (data.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: 'No news founded',
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Data successfully Displayed',
+      data: data,
+    });
   } catch (err) {
     console.error('Error executing query:', err);
     res.status(500).send('Error retrieving data');
@@ -50,7 +61,11 @@ const getNewsSpecified = async (req, res) => {
     });
 
     if (newsItem) {
-      return res.status(200).json({data: newsItem});
+      return res.status(200).json({
+        success: true,
+        message: 'Data successfully Displayed',
+        data: newsItem,
+      });
     } else {
       return res.status(404).json({message: 'News not found'});
     }
