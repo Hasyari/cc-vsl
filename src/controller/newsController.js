@@ -41,12 +41,13 @@ const getNewsAll = async (req, res) => {
         success: false,
         message: 'No news founded',
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: 'Data successfully Displayed',
+        data: data,
+      });
     }
-    res.status(200).json({
-      success: true,
-      message: 'Data successfully Displayed',
-      data: data,
-    });
   } catch (err) {
     console.error('Error executing query:', err);
     res.status(500).send('Error retrieving data');
