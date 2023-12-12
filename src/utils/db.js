@@ -25,7 +25,7 @@ sequelize
     });
 
 // Testing for developments
-sequelize.sync();
+sequelize.sync({force: true});
 
 
 module.exports = sequelize;

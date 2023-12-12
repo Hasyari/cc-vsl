@@ -76,7 +76,6 @@ const getSeparateAlphabet = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error('Error fetching modules:', error);
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',
@@ -95,15 +94,14 @@ const getModulesAll = async (req, res) => {
         success: false,
         message: 'No modules founded',
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: 'Data successfully Displayed',
+        data,
+      });
     }
-
-    res.status(200).json({
-      success: true,
-      message: 'Data successfully Displayed',
-      data,
-    });
-  } catch (err) {
-    console.error('Error fetching modules:', error);
+  } catch (error) {
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',
