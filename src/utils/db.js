@@ -24,7 +24,7 @@ sequelize
       console.log('error connected : ' + err.message);
     });
 
-// Testing for developments
+// Sync Database
 sequelize.sync();
 
 
