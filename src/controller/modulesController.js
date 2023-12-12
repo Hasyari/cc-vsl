@@ -40,7 +40,6 @@ const postBulkDataAlphabet = async (req, res) => {
   ];
   try {
     await Modules.bulkCreate(dataToInsert);
-    // console.log(dataToInsert);
     res.json({message: 'Alphabet data inserted successfully'});
   } catch (error) {
     res.json({message: 'Error inserting alphabet data:'});
@@ -87,10 +86,30 @@ const getSeparateAlphabet = async (req, res) => {
 };
 
 const getModulesAll = async (req, res) => {
-  res.json({
-    success: true,
-    message: 'Fetch Success',
-  });
+  try {
+    const data = await Modules.findAll();
+    const moduleCount = await Modules.count();
+
+    if (moduleCount === 0) {
+      res.status(404).json({
+        success: false,
+        message: 'No modules founded',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Data successfully Displayed',
+      data,
+    });
+  } catch (err) {
+    console.error('Error fetching modules:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error: error.message || 'An unexpected error occurred',
+    });
+  }
 };
 
 
