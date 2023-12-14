@@ -60,6 +60,22 @@ const getSeparateAlphabet = async (req, res) => {
     const {data} = req.params;
     const alpha = data.split('-');
     const listAlphabet = rangeAlphabet(alpha[0], alpha[1]);
+    const dataAlpha = await Modules.findAll({
+      where: {
+        huruf: listAlphabet,
+      },
+    });
+    if (dataAlpha.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: 'No modules found',
+      });
+    } else {
+      res.json({
+        success: true,
+        dataAlpha,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -67,47 +83,6 @@ const getSeparateAlphabet = async (req, res) => {
       error: error.message || 'An unexpected error occurred',
     });
   }
-  // const {data} = req.params;
-  // const alpha = data.split('-');
-  // const listAlphabet = rangeAlphabet(alpha[0], alpha[1]);
-
-  res.json({
-    listAlphabet,
-  });
-  // try {
-  //   const {page} = req.query;
-  //   const resultPerPage = 4;
-  //   const moduleCount = await Modules.count();
-  //   const currentPage = Number(page) || 1;
-  //   const skip = resultPerPage * (currentPage - 1);
-  //   const modules = await Modules.findAll({
-  //     limit: resultPerPage,
-  //     offset: (currentPage - 1) * resultPerPage,
-  //   });
-
-  //   if (modules.length === 0) {
-  //     res.status(404).json({
-  //       success: false,
-  //       message: 'No modules found',
-  //     });
-  //   } else {
-  //     res.json({
-  //       success: true,
-  //       message: 'Fetch Success',
-  //       data: {
-  //         modules,
-  //         skip,
-  //         moduleCount,
-  //       },
-  //     });
-  //   }
-  // } catch (error) {
-  //   res.status(500).json({
-  //     success: false,
-  //     message: 'Internal Server Error',
-  //     error: error.message || 'An unexpected error occurred',
-  //   });
-  // }
 };
 
 const getModulesAll = async (req, res) => {
@@ -136,9 +111,38 @@ const getModulesAll = async (req, res) => {
   }
 };
 
+const getDetailAlphabet = async (req, res) => {
+  try {
+    const {alpha} = req.params;
+    const detailAlpha = await Modules.findOne({
+      where: {
+        huruf: alpha,
+      },
+    });
+    if (!detailAlpha) {
+      res.status(404).json({
+        success: false,
+        message: 'No modules founded',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        detailAlpha,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error: error.message || 'An unexpected error occurred',
+    });
+  }
+};
+
 
 module.exports = {
   getModulesAll,
+  getDetailAlphabet,
   getSeparateAlphabet,
   postBulkDataAlphabet,
 };

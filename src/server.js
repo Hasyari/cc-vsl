@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -6,15 +8,17 @@ const app = express();
 
 const newsRoutes = require('./routes/news');
 const modulesRoutes = require('./routes/modules');
+const exercisesRoutes = require('./routes/exercises');
+
 
 app.use(bodyParser.json());
 // Parse application/json
 app.use(bodyParser.urlencoded({extended: true}));
 
-require('dotenv').config();
 app.use(cors());
 app.use('/news', newsRoutes);
 app.use('/modules', modulesRoutes);
+app.use('/exercises', exercisesRoutes);
 
 
 const listener = app.listen(process.env.PORT, () => {
