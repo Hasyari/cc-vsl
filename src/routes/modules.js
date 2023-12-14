@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/all', modulesController.getModulesAll);
-router.get('/', modulesController.getSeparateAlphabet);
+router.get('/:data', modulesController.getSeparateAlphabet);
 
 // not used production
 // router.post('/', modulesController.postBulkDataAlphabet);

@@ -47,34 +47,19 @@ const postBulkDataAlphabet = async (req, res) => {
 };
 
 
+const rangeAlphabet = (start, stop) =>{
+  const result = [];
+  for (let idx=start.charCodeAt(0), end=stop.charCodeAt(0); idx <=end; ++idx) {
+    result.push(String.fromCharCode(idx));
+  }
+  return result;
+};
+
 const getSeparateAlphabet = async (req, res) => {
   try {
-    const {page} = req.query;
-    const resultPerPage = 4;
-    const moduleCount = await Modules.count();
-    const currentPage = Number(page) || 1;
-    const skip = resultPerPage * (currentPage - 1);
-    const modules = await Modules.findAll({
-      limit: resultPerPage,
-      offset: (currentPage - 1) * resultPerPage,
-    });
-
-    if (modules.length === 0) {
-      res.status(404).json({
-        success: false,
-        message: 'No modules found',
-      });
-    } else {
-      res.json({
-        success: true,
-        message: 'Fetch Success',
-        data: {
-          modules,
-          skip,
-          moduleCount,
-        },
-      });
-    }
+    const {data} = req.params;
+    const alpha = data.split('-');
+    const listAlphabet = rangeAlphabet(alpha[0], alpha[1]);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -82,6 +67,47 @@ const getSeparateAlphabet = async (req, res) => {
       error: error.message || 'An unexpected error occurred',
     });
   }
+  // const {data} = req.params;
+  // const alpha = data.split('-');
+  // const listAlphabet = rangeAlphabet(alpha[0], alpha[1]);
+
+  res.json({
+    listAlphabet,
+  });
+  // try {
+  //   const {page} = req.query;
+  //   const resultPerPage = 4;
+  //   const moduleCount = await Modules.count();
+  //   const currentPage = Number(page) || 1;
+  //   const skip = resultPerPage * (currentPage - 1);
+  //   const modules = await Modules.findAll({
+  //     limit: resultPerPage,
+  //     offset: (currentPage - 1) * resultPerPage,
+  //   });
+
+  //   if (modules.length === 0) {
+  //     res.status(404).json({
+  //       success: false,
+  //       message: 'No modules found',
+  //     });
+  //   } else {
+  //     res.json({
+  //       success: true,
+  //       message: 'Fetch Success',
+  //       data: {
+  //         modules,
+  //         skip,
+  //         moduleCount,
+  //       },
+  //     });
+  //   }
+  // } catch (error) {
+  //   res.status(500).json({
+  //     success: false,
+  //     message: 'Internal Server Error',
+  //     error: error.message || 'An unexpected error occurred',
+  //   });
+  // }
 };
 
 const getModulesAll = async (req, res) => {
