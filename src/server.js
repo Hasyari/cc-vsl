@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const index = require('./routes/index');
 const newsRoutes = require('./routes/news');
 const modulesRoutes = require('./routes/modules');
 const exercisesRoutes = require('./routes/exercises');
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(cors());
+app.use('/', index);
 app.use('/news', newsRoutes);
 app.use('/modules', modulesRoutes);
 app.use('/exercises', exercisesRoutes);
