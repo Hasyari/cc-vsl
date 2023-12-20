@@ -1,4 +1,6 @@
-const uploadImage = require('../utils/uploadImage');
+require('dotenv').config();
+
+const axios = require('axios');
 
 const getPredictSign = async (req, res) => {
   res.status(200).json({
@@ -9,18 +11,25 @@ const getPredictSign = async (req, res) => {
 
 const postPredictSign = async (req, res) => {
   try {
-    const file = req.file;
-    const uploadedImage = await uploadImage(file, 'vsl-cloud-bucket');
+    
+    const apiUrl = process.env.MODEL_APP_API;
+    const formData = new FormData();
 
-    if (!uploadedImage.success) {
-      console.error('Error uploading image:', uploadedImage.error);
-      return res.status(500).json({error: 'Error uploading image'});
-    }
-    console.log('Image uploaded successfully. URL:', uploadedImage.url);
-    res.status(201).json({message: 'News created successfully'});
+    const fileBlob = new Blob([req.file.buffer], {type: req.file.mimetype});
+
+    // Append the Blob to the FormData object
+    formData.append('file', fileBlob, req.file.originalname);
+
+    const response = await axios.post(apiUrl, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    res.json(response.data);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({message: 'Internal Server Error'});
+    console.error('Error uploading file:', error.message);
+    res.status(500).json({error: 'Internal Server Error'});
   }
 };
 

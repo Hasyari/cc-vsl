@@ -23,7 +23,10 @@ const multerConfig = {
 };
 
 const uploadFile = multer(multerConfig).single('image');
+const uploadFilePredict = multer(multerConfig).single('file');
+
 
 module.exports = {
   uploadFile,
+  uploadFilePredict,
 };
