@@ -9,7 +9,7 @@ const app = express();
 const index = require('./routes/index');
 const newsRoutes = require('./routes/news');
 const modulesRoutes = require('./routes/modules');
-const exercisesRoutes = require('./routes/exercises');
+const exerciseRoutes = require('./routes/exercises');
 
 
 app.use(bodyParser.json());
@@ -20,8 +20,7 @@ app.use(cors());
 app.use('/', index);
 app.use('/news', newsRoutes);
 app.use('/modules', modulesRoutes);
-app.use('/exercises', exercisesRoutes);
-
+app.use('/exercises', exerciseRoutes);
 
 const listener = app.listen(process.env.PORT, () => {
   console.log('Your app is listening on port ' + listener.address().port);
