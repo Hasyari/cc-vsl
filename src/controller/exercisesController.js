@@ -11,7 +11,6 @@ const getPredictSign = async (req, res) => {
 
 const postPredictSign = async (req, res) => {
   try {
-    
     const apiUrl = process.env.MODEL_APP_API;
     const formData = new FormData();
 
