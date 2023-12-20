@@ -6,7 +6,7 @@ const postNewsData = async (req, res) => {
     const file = req.file;
 
     // Upload image to GCS
-    const uploadedImage = await uploadImage(file);
+    const uploadedImage = await uploadImage(file, 'bucket-544e');
 
     if (!uploadedImage.success) {
       console.error('Error uploading image:', uploadedImage.error);
