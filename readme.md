@@ -44,6 +44,26 @@ Response :
 }
 ```
 
+## POST News
+
+Endpoint : POST /news/
+
+Response :
+
+```json
+{
+  "message": "News created successfully",
+  "data": {
+    "id": 2,
+    "judul": "Test",
+    "deskripsi": "Dummy",
+    "image_url": "https://storage.googleapis.com/bucket-544e/327a25ec-a8d6-4f13-8c12-0d84788cc290.jpeg",
+    "updatedAt": "2023-12-22T04:04:52.457Z",
+    "createdAt": "2023-12-22T04:04:52.457Z"
+  }
+}
+```
+
 ## GET Modules Details
 
 Endpoint : GET /modules/detail/A/
@@ -114,26 +134,6 @@ Response :
       "updatedAt": "2023-12-14T12:15:35.000Z"
     }
   ]
-}
-```
-
-## POST News
-
-Endpoint : POST /news/
-
-Response :
-
-```json
-{
-  "message": "News created successfully",
-  "data": {
-    "id": 2,
-    "judul": "Test",
-    "deskripsi": "Dummy",
-    "image_url": "https://storage.googleapis.com/bucket-544e/327a25ec-a8d6-4f13-8c12-0d84788cc290.jpeg",
-    "updatedAt": "2023-12-22T04:04:52.457Z",
-    "createdAt": "2023-12-22T04:04:52.457Z"
-  }
 }
 ```
 
