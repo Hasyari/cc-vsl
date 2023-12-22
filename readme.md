@@ -145,14 +145,8 @@ Response :
 
 ```json
 {
-  "success": true,
-  "detailAlpha": {
-    "id": 1,
-    "huruf": "A",
-    "deskripsi": "Form the letter \"A\" by extending your thumb and index finger and keeping the other fingers closed.",
-    "image_url": "https://storage.googleapis.com/bucket-544e/asl-letter-A.svg",
-    "createdAt": "2023-12-14T12:15:35.000Z",
-    "updatedAt": "2023-12-14T12:15:35.000Z"
-  }
+  "huruf": "a",
+  "predict_points": "0.66796046",
+  "predicted_class": 10
 }
 ```
