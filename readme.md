@@ -1,6 +1,6 @@
 # How use it
 
-## GET Data News
+## GET News All
 
 Endpoint : GET /news/
 
@@ -23,7 +23,7 @@ Response :
 }
 ```
 
-## GET Detail News
+## GET News Details
 
 Endpoint : GET /news/1/
 
@@ -44,7 +44,27 @@ Response :
 }
 ```
 
-## GET Data Modules
+## GET Modules Details
+
+Endpoint : GET /modules/detail/A/
+
+Response :
+
+```json
+{
+  "success": true,
+  "detailAlpha": {
+    "id": 1,
+    "huruf": "A",
+    "deskripsi": "Form the letter \"A\" by extending your thumb and index finger and keeping the other fingers closed.",
+    "image_url": "https://storage.googleapis.com/bucket-544e/asl-letter-A.svg",
+    "createdAt": "2023-12-14T12:15:35.000Z",
+    "updatedAt": "2023-12-14T12:15:35.000Z"
+  }
+}
+```
+
+## GET Modules All
 
 Endpoint : GET /modules/
 
@@ -67,7 +87,7 @@ Response :
 }
 ```
 
-## GET Data Modules with Pagination
+## GET Modules with Pagination
 
 Endpoint : GET /modules/A-B/
 
@@ -97,22 +117,22 @@ Response :
 }
 ```
 
-## GET Data Modules Details
+## POST News
 
-Endpoint : GET /modules/detail/A/
+Endpoint : POST /news/
 
 Response :
 
 ```json
 {
-  "success": true,
-  "detailAlpha": {
-    "id": 1,
-    "huruf": "A",
-    "deskripsi": "Form the letter \"A\" by extending your thumb and index finger and keeping the other fingers closed.",
-    "image_url": "https://storage.googleapis.com/bucket-544e/asl-letter-A.svg",
-    "createdAt": "2023-12-14T12:15:35.000Z",
-    "updatedAt": "2023-12-14T12:15:35.000Z"
+  "message": "News created successfully",
+  "data": {
+    "id": 2,
+    "judul": "Test",
+    "deskripsi": "Dummy",
+    "image_url": "https://storage.googleapis.com/bucket-544e/327a25ec-a8d6-4f13-8c12-0d84788cc290.jpeg",
+    "updatedAt": "2023-12-22T04:04:52.457Z",
+    "createdAt": "2023-12-22T04:04:52.457Z"
   }
 }
 ```
